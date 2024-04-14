@@ -16,6 +16,7 @@
     "@react-hookz/web": "^24.0.4",
     "axios": "^1.6.7",
     "lucide-react": "^0.364.0",
+    "notistack": "^3.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
