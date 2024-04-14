@@ -1,23 +1,13 @@
-import {
-  Input,
-  InputField,
-  ButtonSpinner,
-  Heading,
-  VStack,
-  FormControl,
-  FormControlLabel,
-  FormControlLabelText,
-  FormControlError,
-  FormControlErrorText,
-} from "@gluestack-ui/themed";
+import { Heading, VStack } from "@gluestack-ui/themed";
 import { useAuth } from "../../components/context/AuthProvider";
 import { useAsync } from "@react-hookz/web";
 import { userRegister, login } from "../../api/auth";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Redirect } from "expo-router";
 import FormContainer from "../../components/forms/container";
 import { useEffect, useState } from "react";
 import Button from "../../components/ui/button";
+import { ControlledInputField } from "../../components/forms/inputs";
 
 interface FormData {
   email: string;
@@ -29,12 +19,7 @@ interface FormData {
 
 export default function Register() {
   const { session, authenticated } = useAuth();
-  const {
-    handleSubmit,
-    watch,
-    control,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { handleSubmit, watch, control } = useForm<FormData>();
   const [registerRequest, registerActions] = useAsync(userRegister);
   const [loginRequest, loginActions] = useAsync(login);
   const [sessionStatus, setSessionStatus] = useState<"not-started" | "loading">(
@@ -80,57 +65,25 @@ export default function Register() {
       <Heading>Create an account</Heading>
       <VStack gap="$4" my="$2">
         {/* FIRST NAME */}
-        <Controller
+        <ControlledInputField
           name="first_name"
           control={control}
           rules={{ required: "First name is required" }}
-          render={({ field: { onChange } }) => (
-            <FormControl isRequired isInvalid={!!errors.first_name}>
-              <FormControlLabel>
-                <FormControlLabelText>First Name</FormControlLabelText>
-              </FormControlLabel>
-              <Input>
-                <InputField
-                  placeholder="John"
-                  onChangeText={onChange}
-                  type="text"
-                />
-              </Input>
-              <FormControlError>
-                <FormControlErrorText>
-                  {errors.first_name?.message}
-                </FormControlErrorText>
-              </FormControlError>
-            </FormControl>
-          )}
+          labelText="First Name"
+          isRequired
+          placeholder="John"
         />
         {/* LAST NAME */}
-        <Controller
+        <ControlledInputField
           name="last_name"
           control={control}
           rules={{ required: "Last name is required" }}
-          render={({ field: { onChange } }) => (
-            <FormControl isRequired isInvalid={!!errors.last_name}>
-              <FormControlLabel>
-                <FormControlLabelText>Last Name</FormControlLabelText>
-              </FormControlLabel>
-              <Input>
-                <InputField
-                  placeholder="Doe"
-                  onChangeText={onChange}
-                  type="text"
-                />
-              </Input>
-              <FormControlError>
-                <FormControlErrorText>
-                  {errors.last_name?.message}
-                </FormControlErrorText>
-              </FormControlError>
-            </FormControl>
-          )}
+          labelText="Last Name"
+          isRequired
+          placeholder="Doe"
         />
         {/* EMAIL */}
-        <Controller
+        <ControlledInputField
           name="email"
           control={control}
           rules={{
@@ -140,81 +93,33 @@ export default function Register() {
               message: "Please enter a valid email address.",
             },
           }}
-          render={({ field: { onChange } }) => (
-            <FormControl isRequired isInvalid={!!errors.email}>
-              <FormControlLabel>
-                <FormControlLabelText>Email</FormControlLabelText>
-              </FormControlLabel>
-              <Input>
-                <InputField
-                  placeholder="email@example.com"
-                  onChangeText={onChange}
-                  type="text"
-                />
-              </Input>
-              <FormControlError>
-                <FormControlErrorText>
-                  {errors.email?.message}
-                </FormControlErrorText>
-              </FormControlError>
-            </FormControl>
-          )}
+          labelText="Email"
+          isRequired
+          placeholder="email@example.com"
         />
         {/* PASSWORD */}
-        <Controller
+        <ControlledInputField
           name="password"
           control={control}
           rules={{ required: "Password is required" }}
-          render={({ field: { onChange } }) => (
-            <FormControl isRequired isInvalid={!!errors.password}>
-              <FormControlLabel>
-                <FormControlLabelText>Password</FormControlLabelText>
-              </FormControlLabel>
-              <Input>
-                <InputField
-                  placeholder="********"
-                  onChangeText={onChange}
-                  secureTextEntry
-                  type="password"
-                />
-              </Input>
-              <FormControlError>
-                <FormControlErrorText>
-                  {errors.password?.message}
-                </FormControlErrorText>
-              </FormControlError>
-            </FormControl>
-          )}
+          labelText="Password"
+          isRequired
+          placeholder="********"
+          type="password"
         />
         {/* PASSWORD CONFIRMATION */}
-        <Controller
+        <ControlledInputField
           name="password_confirmation"
           control={control}
           rules={{
             required: "Confirm password is required",
-            validate: (value) =>
+            validate: (value: string) =>
               value === watch("password") || "Passwords do not match",
           }}
-          render={({ field: { onChange } }) => (
-            <FormControl isRequired isInvalid={!!errors.password_confirmation}>
-              <FormControlLabel>
-                <FormControlLabelText>Confirm Password</FormControlLabelText>
-              </FormControlLabel>
-              <Input>
-                <InputField
-                  placeholder="********"
-                  onChangeText={onChange}
-                  secureTextEntry
-                  type="password"
-                />
-              </Input>
-              <FormControlError>
-                <FormControlErrorText>
-                  {errors.password_confirmation?.message}
-                </FormControlErrorText>
-              </FormControlError>
-            </FormControl>
-          )}
+          labelText="Confirm Password"
+          isRequired
+          placeholder="********"
+          type="password"
         />
         <Button
           text="Register"

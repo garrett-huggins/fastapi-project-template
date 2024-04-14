@@ -3,43 +3,30 @@ import { useAsync } from "@react-hookz/web";
 import { login } from "../../api/auth";
 import { useState } from "react";
 import { Redirect, Link } from "expo-router";
-import {
-  Text,
-  Heading,
-  Input,
-  InputField,
-  InputSlot,
-  InputIcon,
-  VStack,
-  FormControl,
-  FormControlLabel,
-  FormControlLabelText,
-  EyeIcon,
-  EyeOffIcon,
-  LinkText,
-} from "@gluestack-ui/themed";
+import { Text, Heading, VStack, LinkText } from "@gluestack-ui/themed";
 import FormContainer from "../../components/forms/container";
 import Button from "../../components/ui/button";
+import { ControlledInputField } from "../../components/forms/inputs";
+import { useForm } from "react-hook-form";
+
+interface FormData {
+  email: string;
+  password: string;
+}
 
 export default function Login() {
   const { session, authenticated } = useAuth();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const handleState = () => {
-    setShowPassword((showState) => {
-      return !showState;
-    });
-  };
+  const { control, handleSubmit } = useForm<FormData>();
 
   const [sessionStatus, setSessionStatus] = useState<"not-started" | "loading">(
     "not-started"
   );
 
-  const [loginRequest, loginActions] = useAsync(async () => {
-    const response = await login(email, password);
-    return response;
+  const [loginRequest, loginActions] = useAsync(login);
+
+  const onSubmit = handleSubmit((data: FormData) => {
+    loginActions.execute(data.email, data.password);
   });
 
   const onLogin = async (access_token: string, refresh_token: string) => {
@@ -67,45 +54,30 @@ export default function Login() {
         <Text color="red">Invalid email or password</Text>
       ) : null}
       <VStack gap="$4" my="$2">
-        <FormControl isRequired>
-          <FormControlLabel>
-            <FormControlLabelText>Email</FormControlLabelText>
-          </FormControlLabel>
-          <Input>
-            <InputField
-              onChangeText={setEmail}
-              value={email}
-              placeholder="email@example.com"
-            />
-          </Input>
-        </FormControl>
-        <FormControl isRequired>
-          <FormControlLabel>
-            <FormControlLabelText>Password</FormControlLabelText>
-          </FormControlLabel>
-          <Input>
-            <InputField
-              placeholder="********"
-              type={showPassword ? "text" : "password"}
-              onChangeText={setPassword}
-            />
-            <InputSlot pr="$3" onPress={handleState}>
-              {/* EyeIcon, EyeOffIcon are both imported from 'lucide-react-native' */}
-              <InputIcon
-                as={showPassword ? EyeIcon : EyeOffIcon}
-                color="$darkBlue500"
-              />
-            </InputSlot>
-          </Input>
-        </FormControl>
+        <ControlledInputField
+          labelText="Email"
+          placeholder="email@example.com"
+          type="text"
+          control={control}
+          name="email"
+          isRequired
+          rules={{ required: "Email is required" }}
+        />
+        <ControlledInputField
+          labelText="Password"
+          placeholder="********"
+          type="password"
+          control={control}
+          name="password"
+          isRequired
+          rules={{ required: "Password is required" }}
+        />
         <Button
           text="Login"
           loading={
             loginRequest.status === "loading" || sessionStatus === "loading"
           }
-          onPress={() => {
-            loginActions.execute();
-          }}
+          onPress={onSubmit}
         />
       </VStack>
       <Link href="register">

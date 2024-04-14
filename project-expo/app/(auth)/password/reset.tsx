@@ -1,14 +1,7 @@
 import {
   Text,
   Heading,
-  FormControl,
   VStack,
-  FormControlLabel,
-  FormControlLabelText,
-  FormControlError,
-  FormControlErrorText,
-  Input,
-  InputField,
   Button,
   ButtonText,
   useToast,
@@ -18,10 +11,11 @@ import {
 } from "@gluestack-ui/themed";
 import FormContainer from "../../../components/forms/container";
 import { useLocalSearchParams, router } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAsync } from "@react-hookz/web";
 import { resetPassword } from "../../../api/auth";
 import { useForm, Controller } from "react-hook-form";
+import { ControlledInputField } from "../../../components/forms/inputs";
 
 interface FormData {
   reset_token: string;
@@ -104,84 +98,37 @@ export default function PasswordReset() {
       </Text>
       <VStack gap="$4" my="$4">
         {!token && (
-          <Controller
+          <ControlledInputField
             name="reset_token"
+            labelText="Reset Token"
             control={control}
             rules={{ required: "Reset token is required" }}
-            render={({ field: { onChange } }) => (
-              <FormControl isRequired isInvalid={!!errors.reset_token}>
-                <FormControlLabel>
-                  <FormControlLabelText>Reset Token</FormControlLabelText>
-                </FormControlLabel>
-                <Input>
-                  <InputField
-                    placeholder="Paste your reset token here"
-                    onChangeText={onChange}
-                  />
-                </Input>
-                <FormControlError>
-                  <FormControlErrorText>
-                    {errors.reset_token?.message}
-                  </FormControlErrorText>
-                </FormControlError>
-              </FormControl>
-            )}
+            placeholder="Paste your reset token here"
           />
         )}
-        <Controller
+        {/* PASSWORD */}
+        <ControlledInputField
           name="password"
+          labelText="Password"
           control={control}
           rules={{ required: "Password is required" }}
-          render={({ field: { onChange } }) => (
-            <FormControl isRequired isInvalid={!!errors.password}>
-              <FormControlLabel>
-                <FormControlLabelText>Password</FormControlLabelText>
-              </FormControlLabel>
-              <Input>
-                <InputField
-                  placeholder="********"
-                  onChangeText={onChange}
-                  secureTextEntry
-                  type="password"
-                />
-              </Input>
-              <FormControlError>
-                <FormControlErrorText>
-                  {errors.password?.message}
-                </FormControlErrorText>
-              </FormControlError>
-            </FormControl>
-          )}
+          placeholder="********"
+          secureTextEntry
+          type="password"
         />
         {/* PASSWORD CONFIRMATION */}
-        <Controller
+        <ControlledInputField
           name="confirmPassword"
+          labelText="Confirm Password"
           control={control}
           rules={{
             required: "Confirm password is required",
             validate: (value) =>
               value === watch("password") || "Passwords do not match",
           }}
-          render={({ field: { onChange } }) => (
-            <FormControl isRequired isInvalid={!!errors.confirmPassword}>
-              <FormControlLabel>
-                <FormControlLabelText>Confirm Password</FormControlLabelText>
-              </FormControlLabel>
-              <Input>
-                <InputField
-                  placeholder="********"
-                  onChangeText={onChange}
-                  secureTextEntry
-                  type="password"
-                />
-              </Input>
-              <FormControlError>
-                <FormControlErrorText>
-                  {errors.confirmPassword?.message}
-                </FormControlErrorText>
-              </FormControlError>
-            </FormControl>
-          )}
+          placeholder="********"
+          secureTextEntry
+          type="password"
         />
         <Button onPress={onSubmit}>
           <ButtonText>Reset Password</ButtonText>
