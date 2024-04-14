@@ -1,9 +1,9 @@
-import settings from "../../config/settings";
+import project from "../../config/project";
 import { ArrowLeft } from "lucide-react";
 import { Box, TextField } from "@mui/material";
 import Button from "../../components/ui/button";
 import Link from "../../components/ui/link";
-import { FormBox, FormScreenContainer } from "../../components/FormContainers";
+import { FormBox, FormScreenContainer } from "../../components/forms/container";
 import { useForm } from "react-hook-form";
 import { useAsync } from "@react-hookz/web";
 import { registerUser } from "../../api/auth";
@@ -55,8 +55,8 @@ const Register = () => {
         </Link>
         <h1 style={{ textAlign: "center" }}>Sign Up</h1>
         <p>
-          Welcome to {settings.PROJECT_NAME}. Please enter your details below to
-          create an account.
+          Welcome to {project.name}. Please enter your details below to create
+          an account.
         </p>
         <TextField
           required
@@ -128,7 +128,7 @@ const Register = () => {
         </Button>
       </FormBox>
       <Box color="GrayText">
-        <p>© 2024 {settings.PROJECT_NAME} - Terms of Use</p>
+        <p>© 2024 {project.name} - Terms of Use</p>
       </Box>
     </FormScreenContainer>
   );

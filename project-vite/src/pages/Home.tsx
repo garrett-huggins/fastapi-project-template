@@ -1,5 +1,6 @@
 import { Typography, Button } from "@mui/material";
 import { useAuth } from "../components/context/AuthContext";
+import project from "../config/project";
 
 const Home = () => {
   const { session, authenticated, user } = useAuth();
@@ -16,7 +17,7 @@ const Home = () => {
       }}
     >
       <Typography fontSize="2rem" fontWeight="bold">
-        Home
+        Welcome to the {project.name} home page!
       </Typography>
       {authenticated ? (
         <>

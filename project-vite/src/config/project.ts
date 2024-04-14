@@ -1,8 +1,8 @@
-export const settings = {
-  PROJECT_NAME: "Vite Template",
+export const project = {
+  name: "Vite Template",
 };
 
-export default settings;
+export default project;
 
 export const styles = {
   primaryColor: "#1890ff",
@@ -12,3 +12,5 @@ export const styles = {
   infoColor: "#1890ff",
   errorColor: "#f5222d",
 };
+
+export const API_URL = import.meta.env.VITE_API_URL;

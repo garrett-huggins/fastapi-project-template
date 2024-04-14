@@ -1,6 +1,6 @@
-import settings from "../../config/settings";
+import project from "../../config/project";
 import { Box, TextField } from "@mui/material";
-import { FormBox, FormScreenContainer } from "../../components/FormContainers";
+import { FormBox, FormScreenContainer } from "../../components/forms/container";
 import Button from "../../components/ui/button";
 import Link from "../../components/ui/link";
 import { resetPassword } from "../../api/auth";
@@ -81,7 +81,7 @@ const ResetPassword = () => {
         </p>
       </FormBox>
       <Box color="GrayText">
-        <p>© 2024 {settings.PROJECT_NAME} - Terms of Use</p>
+        <p>© 2024 {project.name} - Terms of Use</p>
       </Box>
     </FormScreenContainer>
   );

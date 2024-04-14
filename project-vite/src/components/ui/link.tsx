@@ -1,5 +1,5 @@
 import { Link as MUILink, LinkProps } from "@mui/material";
-import { styles } from "../../config/settings";
+import { styles } from "../../config/project";
 
 /**
  * Custom Link component with primary color and hover state.

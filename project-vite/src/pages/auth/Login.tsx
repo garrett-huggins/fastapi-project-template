@@ -1,4 +1,4 @@
-import settings from "../../config/settings";
+import project from "../../config/project";
 import Link from "../../components/ui/link";
 import Button from "../../components/ui/button";
 import { Box, TextField } from "@mui/material";
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { login as APILogin } from "../../api/auth";
-import { FormBox, FormScreenContainer } from "../../components/FormContainers";
+import { FormBox, FormScreenContainer } from "../../components/forms/container";
 import { useAuth } from "../../components/context/AuthContext";
 
 type FormData = {
@@ -57,9 +57,7 @@ const Login = () => {
   return (
     <FormScreenContainer>
       <FormBox>
-        <h1 style={{ textAlign: "center" }}>
-          Sign In To {settings.PROJECT_NAME}
-        </h1>
+        <h1 style={{ textAlign: "center" }}>Sign In To {project.name}</h1>
         {error && (
           <Box
             sx={{
@@ -115,7 +113,7 @@ const Login = () => {
         </p>
       </FormBox>
       <Box color="GrayText">
-        <p>© 2024 {settings.PROJECT_NAME} - Terms of Use</p>
+        <p>© 2024 {project.name} - Terms of Use</p>
       </Box>
     </FormScreenContainer>
   );

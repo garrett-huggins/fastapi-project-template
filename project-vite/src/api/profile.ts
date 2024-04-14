@@ -1,7 +1,6 @@
 import axios from "axios";
-
-const BASE_URL = import.meta.env.VITE_API_URL;
-const API_URL = `${BASE_URL}/profile`;
+import { API_URL } from "../config/project";
+const API = `${API_URL}/profile`;
 
 export interface IUser {
   id: number;
@@ -19,11 +18,11 @@ export interface IUserUpdate {
 }
 
 export const getProfile = async () => {
-  const result: { data: IUser } = await axios.get(`${API_URL}`);
+  const result: { data: IUser } = await axios.get(`${API}`);
   return result.data;
 };
 
 export const updateProfile = async (data: IUserUpdate) => {
-  const result: { data: IUser } = await axios.put(`${API_URL}`, data);
+  const result: { data: IUser } = await axios.put(`${API}`, data);
   return result.data;
 };
