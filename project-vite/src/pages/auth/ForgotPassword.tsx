@@ -1,16 +1,16 @@
-import settings from "../../config/settings";
-import { Box } from "@mui/material";
-import { FormBox, FormScreenContainer } from "../../components/FormContainers";
+import project from "../../config/project";
+import { Box, TextField } from "@mui/material";
+import { FormBox, FormScreenContainer } from "../../components/forms/container";
 import { useForm } from "react-hook-form";
 import Button from "../../components/ui/button";
 import Link from "../../components/ui/link";
-import TextField from "@mui/material/TextField";
 import { useAsync } from "@react-hookz/web";
 import { forgotPassword } from "../../api/auth";
 import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { useAuth } from "../../components/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 interface FormData {
   email: string;
@@ -29,6 +29,10 @@ const ForgotPassword = () => {
 
   const onSubmit = handleSubmit((data: FormData) => {
     forgotPasswordActions.execute(data.email);
+    enqueueSnackbar("Success! Please check your email for the reset link.", {
+      variant: "success",
+    });
+    navigate("/password/reset");
   });
 
   useEffect(() => {
@@ -69,7 +73,7 @@ const ForgotPassword = () => {
         </Button>
       </FormBox>
       <Box color="GrayText">
-        <p>© 2024 {settings.PROJECT_NAME} - Terms of Use</p>
+        <p>© 2024 {project.name} - Terms of Use</p>
       </Box>
     </FormScreenContainer>
   );
