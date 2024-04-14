@@ -5,10 +5,10 @@ import {
 } from "@gluestack-ui/themed";
 import { ComponentProps } from "react";
 
-type GButtonProps = ComponentProps<typeof GButton>;
+type IButtonProps = ComponentProps<typeof GButton>;
 
 // Props extended from gluestack-ui Button
-interface ButtonProps extends GButtonProps {
+interface ButtonProps extends IButtonProps {
   text: string;
   loading: boolean;
 }
