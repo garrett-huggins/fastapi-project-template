@@ -18,13 +18,13 @@ interface InputFieldProps extends IInputField, ControlProps {
 }
 
 /**
- * InputField - extends FormControl
- * @property labelText string: Form label text
- * @property helperText string?: Form helper text
- * @property errorText string?: Form error text
- * @property isRequired boolean?: Form required field
- * @property isInvalid boolean?: Form field invalid
- * @property error FieldError | undefined?: Form field error
+ * @component InputField extends FormControl
+ * @property {string} labelText - Form label text
+ * @property {string?} helperText - Form helper text
+ * @property {string?} errorText - Form error text
+ * @property {boolean?} isRequired - Form required field
+ * @property {boolean?} isInvalid - Form field invalid
+ * @property {FieldError | undefined?} error - Form field error
  * @example
  * <InputField
  *  labelText="First Name"
@@ -69,12 +69,12 @@ interface ControlledInputFieldProps extends IInputField {
 
 /**
  * ControlledInputField - extends InputField
- * @property labelText string: Form label text
- * @property helperText string?: Form helper text
- * @property isRequired boolean?: Form required field
- * @property control Control<FormData, any>: React Hook Form control
- * @property name string: Form field name
- * @property rules any: Form field validation rules
+ * @property {string} labelText - Form label text
+ * @property {string?} helperText - Form helper text
+ * @property {boolean?} isRequired - Form required field
+ * @property {Control<FormData, any>} control - React Hook Form control
+ * @property {string} name - Form field name
+ * @property {any} rules - Form field validation rules
  * @example
  * <ControlledInputField
  *  name="first_name"
