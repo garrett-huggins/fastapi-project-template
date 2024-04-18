@@ -1,5 +1,5 @@
 import project from "../../config/project";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { FormBox, FormScreenContainer } from "../../components/forms/container";
 import { useForm } from "react-hook-form";
 import Button from "../../components/ui/button";
@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useAuth } from "../../components/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { enqueueSnackbar } from "notistack";
+import { FormTextField } from "../../components/forms/inputs";
 
 interface FormData {
   email: string;
@@ -21,11 +22,7 @@ const ForgotPassword = () => {
   const [forgotPasswordState, forgotPasswordActions] = useAsync(forgotPassword);
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { control, handleSubmit } = useForm<FormData>();
 
   const onSubmit = handleSubmit((data: FormData) => {
     forgotPasswordActions.execute(data.email);
@@ -53,15 +50,14 @@ const ForgotPassword = () => {
           Enter your email address below and we'll send you a link to reset your
           password.
         </p>
-        <TextField
+        <FormTextField
           required
-          {...register("email", { required: true })}
-          label="Email"
           fullWidth
-          variant="outlined"
+          label="Email"
           margin="normal"
-          error={errors.email ? true : false}
-          helperText={errors.email ? "Email is required" : ""}
+          control={control}
+          rules={{ required: "Email is required" }}
+          name="email"
         />
         <Button
           type="submit"

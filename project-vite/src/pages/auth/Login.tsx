@@ -1,7 +1,7 @@
 import project from "../../config/project";
 import Link from "../../components/ui/link";
 import Button from "../../components/ui/button";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { useAsync } from "@react-hookz/web";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { login as APILogin } from "../../api/auth";
 import { FormBox, FormScreenContainer } from "../../components/forms/container";
 import { useAuth } from "../../components/context/AuthContext";
+import { FormTextField } from "../../components/forms/inputs";
 
 type FormData = {
   email: string;
@@ -24,11 +25,7 @@ const Login = () => {
   );
   const [error, setError] = useState<boolean>(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { handleSubmit, control } = useForm<FormData>();
 
   const onSubmit = handleSubmit((data: FormData) => {
     // onSignIn(data.email, data.password);
@@ -69,34 +66,31 @@ const Login = () => {
             Invalid email or password
           </Box>
         )}
-        <TextField
-          required
+        <FormTextField
           label="Email Address"
-          type="email"
-          sx={{ marginBottom: 2 }}
+          margin="normal"
+          required
           fullWidth
-          {...register("email", {
+          control={control}
+          rules={{
             required: "Email is required",
             pattern: {
               value: /\S+@\S+\.\S+/,
               message: "Please enter a valid email address.",
             },
-          })}
-          error={!!errors.email}
-          helperText={errors.email?.message}
+          }}
+          name={"email"}
         />
-
-        <TextField
-          required
+        <FormTextField
           label="Password"
-          type="password"
-          sx={{ marginBottom: 2 }}
+          margin="normal"
+          required
           fullWidth
-          {...register("password", { required: "Password is required" })}
-          error={!!errors.password}
-          helperText={errors.password?.message}
+          control={control}
+          rules={{ required: "Password is required" }}
+          name={"password"}
+          type={"password"}
         />
-
         <Button
           disabled={loginState.status === "loading" || status === "loading"}
           variant="contained"

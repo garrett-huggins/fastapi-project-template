@@ -1,5 +1,5 @@
 import project from "../../config/project";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import { FormBox, FormScreenContainer } from "../../components/forms/container";
 import Button from "../../components/ui/button";
 import Link from "../../components/ui/link";
@@ -9,10 +9,12 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { useAuth } from "../../components/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { FormTextField } from "../../components/forms/inputs";
 
 interface FormData {
   resetToken: string;
   newPassword: string;
+  confirmNewPassword: string;
 }
 
 const ResetPassword = () => {
@@ -20,11 +22,7 @@ const ResetPassword = () => {
   const [resetPasswordState, resetPasswordActions] = useAsync(resetPassword);
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { control, watch, handleSubmit } = useForm<FormData>();
 
   const onSubmit = handleSubmit((data: FormData) => {
     resetPasswordActions.execute({
@@ -47,26 +45,36 @@ const ResetPassword = () => {
           Enter the reset token and your new password below to reset your
           password.
         </p>
-        <TextField
+        <FormTextField
           required
-          {...register("resetToken", { required: "Reset Token is required" })}
+          fullWidth
           label="Reset Token"
-          fullWidth
-          variant="outlined"
           margin="normal"
-          error={errors.resetToken ? true : false}
-          helperText={errors.resetToken?.message}
+          control={control}
+          rules={{ required: "Reset Token is required" }}
+          name="resetToken"
         />
-        <TextField
+        <FormTextField
           required
-          {...register("newPassword", { required: "New Password is required" })}
-          label="New Password"
           fullWidth
-          type="password"
-          variant="outlined"
+          label="New Password"
           margin="normal"
-          error={errors.newPassword ? true : false}
-          helperText={errors.newPassword?.message}
+          control={control}
+          rules={{ required: "New Password is required" }}
+          name="newPassword"
+        />
+        <FormTextField
+          required
+          fullWidth
+          label="Confirm New Password"
+          margin="normal"
+          control={control}
+          rules={{
+            required: "Confirm New Password is required",
+            validate: (value) =>
+              value === watch("newPassword") || "Passwords do not match",
+          }}
+          name="confirmNewPassword"
         />
         <Button
           type="submit"

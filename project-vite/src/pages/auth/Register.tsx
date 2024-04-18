@@ -1,6 +1,6 @@
 import project from "../../config/project";
 import { ArrowLeft } from "lucide-react";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import Button from "../../components/ui/button";
 import Link from "../../components/ui/link";
 import { FormBox, FormScreenContainer } from "../../components/forms/container";
@@ -10,6 +10,7 @@ import { registerUser } from "../../api/auth";
 import { useEffect } from "react";
 import { useAuth } from "../../components/context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { FormTextField } from "../../components/forms/inputs";
 
 interface FormData {
   firstName: string;
@@ -24,12 +25,7 @@ const Register = () => {
   const [registerState, registerActions] = useAsync(registerUser);
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormData>();
+  const { control, handleSubmit, watch } = useForm<FormData>();
 
   const onSubmit = handleSubmit((data: FormData) => {
     registerActions.execute({
@@ -58,66 +54,64 @@ const Register = () => {
           Welcome to {project.name}. Please enter your details below to create
           an account.
         </p>
-        <TextField
+        <FormTextField
           required
-          {...register("firstName", { required: "First Name is required" })}
+          fullWidth
           label="First Name"
-          fullWidth
-          variant="outlined"
           margin="normal"
-          error={errors.firstName ? true : false}
-          helperText={errors.firstName?.message}
+          control={control}
+          rules={{ required: "First Name is required" }}
+          name="firstName"
         />
-        <TextField
+        <FormTextField
           required
-          {...register("lastName", { required: "Last Name is required" })}
+          fullWidth
           label="Last Name"
-          fullWidth
-          variant="outlined"
           margin="normal"
-          error={errors.lastName ? true : false}
-          helperText={errors.lastName?.message}
+          control={control}
+          rules={{ required: "Last Name is required" }}
+          name="lastName"
         />
-        <TextField
+        <FormTextField
           required
-          {...register("email", {
+          fullWidth
+          label="Email"
+          margin="normal"
+          control={control}
+          rules={{
             required: "Email is required",
             pattern: {
               value: /\S+@\S+\.\S+/,
               message: "Please enter a valid email address.",
             },
-          })}
-          label="Email"
-          fullWidth
-          variant="outlined"
-          margin="normal"
-          error={errors.email ? true : false}
-          helperText={errors.email?.message}
+          }}
+          name="email"
         />
-        <TextField
+        <FormTextField
           required
-          {...register("password", { required: "Password is required" })}
+          fullWidth
           label="Password"
-          fullWidth
-          variant="outlined"
           margin="normal"
-          error={errors.password ? true : false}
-          helperText={errors.password?.message}
+          control={control}
+          rules={{ required: "Password is required" }}
+          name="password"
+          type="password"
         />
-        <TextField
+        <FormTextField
           required
-          {...register("confirmPassword", {
+          fullWidth
+          label="Confirm Password"
+          margin="normal"
+          control={control}
+          rules={{
             required: "Please confirm your password",
             validate: (value) =>
               value === watch("password") || "Passwords do not match",
-          })}
-          label="Confirm Password"
-          fullWidth
-          variant="outlined"
-          margin="normal"
-          error={errors.confirmPassword ? true : false}
-          helperText={errors.confirmPassword?.message}
+          }}
+          name="confirmPassword"
+          type="password"
         />
+
         <Button
           type="submit"
           fullWidth
