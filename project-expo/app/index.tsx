@@ -10,9 +10,17 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 import project from "../config/project";
+import * as Sentry from "sentry-expo";
 
 export default function Home() {
   const { session, authenticated, user } = useAuth();
+
+  // sentry
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN || "",
+    enableInExpoDevelopment: false,
+    debug: false,
+  });
 
   return (
     <Box flex={1} justifyContent="center" alignItems="center">

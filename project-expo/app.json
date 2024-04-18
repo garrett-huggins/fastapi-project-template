@@ -27,6 +27,17 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": ["expo-router", "expo-secure-store"],
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "organization",
+            "project": "project"
+          }
+        }
+      ]
+    },
     "extra": {
       "router": {
         "origin": false
