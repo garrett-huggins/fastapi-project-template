@@ -1,4 +1,12 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import * as Sentry from "@sentry/react";
+import {
+  useLocation,
+  useNavigationType,
+  createRoutesFromChildren,
+  matchRoutes,
+} from "react-router";
+import { useEffect } from "react";
 import { AuthProvider } from "./components/context/AuthContext";
 import ProtectedRoute from "./components/context/ProtectedRoute";
 import {
@@ -10,11 +18,27 @@ import {
   Page404,
 } from "./pages";
 
+Sentry.init({
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  integrations: [
+    Sentry.reactRouterV6BrowserTracingIntegration({
+      useEffect: useEffect,
+      useLocation,
+      useNavigationType,
+      createRoutesFromChildren,
+      matchRoutes,
+    }),
+  ],
+  tracesSampleRate: 1.0,
+});
+
+const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
+
 const App = () => {
   return (
     <Router>
       <AuthProvider>
-        <Routes>
+        <SentryRoutes>
           <Route path="/" element={<Home />} />
           <Route path="*" element={<Page404 />} />
           {/* Auth Routes */}
@@ -25,7 +49,7 @@ const App = () => {
 
           {/* Session Routes */}
           <Route element={<ProtectedRoute />}></Route>
-        </Routes>
+        </SentryRoutes>
       </AuthProvider>
     </Router>
   );
