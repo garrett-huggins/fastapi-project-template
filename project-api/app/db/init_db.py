@@ -20,7 +20,8 @@ def init_db(db: Session) -> None:
         user_in = schemas.UserBase(
             email=settings.FIRST_SUPERUSER,
             password=settings.FIRST_SUPERUSER_PASSWORD,
-            name="admin",
+            first_name="admin",
+            last_name="admin",
             gender="string",
             birthday="YYYY-MM-DD",
             height=62,
