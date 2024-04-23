@@ -2,7 +2,9 @@
 
 <br>
 
-## Installing and Running
+## Getting Started
+
+### Installation
 
 Install Vite and all dependencies:
 
@@ -10,21 +12,7 @@ Install Vite and all dependencies:
 npm install
 ```
 
-Run the development server:
-
-```bash
-npm run dev
-```
-
-<br>
-
-## Developing
-
-### Requirements
-
-Latest version of [node](https://nodejs.org/en/) and [npm](https://www.npmjs.com/).
-
-### Project Variables
+### Configuration
 
 #### Environment Variables
 
@@ -45,9 +33,7 @@ SENTRY_AUTH_TOKEN=123456
 
 #### Project Config
 
-The `config/project.ts` file contains the project information and styles used throughout the application. Update the file to fit your project.
-
-> **Important:** The project name property is used in the email templates.
+Update `package.json` with your project details.
 
 ```typescript
 // config/project.ts example
@@ -71,4 +57,12 @@ export const styles = {
   infoColor: "#1890ff",
   errorColor: "#f5222d",
 };
+```
+
+### Running
+
+Start the development server:
+
+```bash
+npm run dev
 ```

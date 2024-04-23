@@ -114,11 +114,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     refreshActions.execute();
   };
 
-  // TODO: refresh token
-  // const refreshToken = async () => {
-  //   refreshTokenActions.execute();
-  // };
-
   const session = {
     create: createSession,
     end: endSession,

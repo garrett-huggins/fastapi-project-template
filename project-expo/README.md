@@ -1,10 +1,31 @@
 # Expo Template
 
+<br>
+
 ## Getting Started
 
-1. Update `app.json` and `package.json` with your app details
-2. Run `eas init` or `eas build` to create a new eas expo build
-3. Link project to Expo account and project id
+### Installation
+
+Install the dependencies:
+
+```bash
+npm install
+```
+
+### Configuration
+
+#### Environment Variables
+
+Copy `.env.example` file to `.env` and update the variables
+
+- `EXPO_PUBLIC_API_URL` - Public API URL
+- `SENTRY_DSN` - Sentry DSN
+
+#### Project Info and EAS
+
+- Update `app.json` and `package.json` with your app details
+- Run `eas init` or `eas build` to create a new eas expo build
+- Link project to Expo account and project id
 
 ### Build Profiles
 
@@ -31,8 +52,12 @@ eas build --profile <profile>
 
 ## Documentation
 
-### Expo
+### Config
 
-[Routing](https://docs.expo.dev/router/create-pages/)
+- `config` - Contains configuration files for the project and app.
 
-[Environment Variables](https://docs.expo.dev/guides/environment-variables/)
+### Components
+
+- `components/forms` - Contains pre-built form components using MUI and wrapped with React Hook Form.
+
+- `components/ui` - Contains pre-built UI components using MUI.

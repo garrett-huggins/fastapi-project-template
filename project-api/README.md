@@ -65,6 +65,8 @@ This uses the FIRST_SUPERUSER and FIRST_SUPERUSER_PASSWORD variables as credenti
 
 2. Edit the project information in `app/api/config.py` to fit your project.
 
+> **Important:** `PROJECT_NAME` in `app/api/config.py` is used for the project name in the email templates. There are other project details in `config.py` that can be updated and used, but `PROJECT_NAME` is the only one that is required.
+
 ## Running in Development Mode
 
 Before initiating the development mode, ensure that your `.env` file includes the necessary environment variables required for the application to run smoothly. Set the following variables within the `.env` file:

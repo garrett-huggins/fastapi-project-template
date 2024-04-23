@@ -28,7 +28,6 @@ const Login = () => {
   const { handleSubmit, control } = useForm<FormData>();
 
   const onSubmit = handleSubmit((data: FormData) => {
-    // onSignIn(data.email, data.password);
     setError(false);
     loginActions.execute(data.email, data.password);
   });
